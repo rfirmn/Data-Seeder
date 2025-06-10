@@ -5,7 +5,7 @@ import time
 import random
 
 fake = Faker()
-data = 1000 # Jumlah catatan palsu yang akan dimasukkan
+data = 1000000 # Jumlah catatan palsu yang akan dimasukkan
 
 def mysql_connection():
     connection = None
@@ -101,7 +101,7 @@ def mysql_connection():
             role = random.choice(use_role)
             pengguna_to_insert.append((nama, email, password, role))
             
-            if (i + 1) % 100 == 0 or (i + 1) == data:
+            if (i + 1) % 10000 == 0 or (i + 1) == data:
                 cur.executemany("INSERT INTO pengguna (nama, email, password, role) VALUES (%s, %s, %s, %s)", pengguna_to_insert)
                 connection.commit()
                 print(f"Telah memasukkan {i + 1} baris ke 'pengguna'...")
@@ -149,7 +149,7 @@ def mysql_connection():
             status = random.choice(['pending', 'proses', 'selesai'])
             pengaduan_to_insert.append((user_id, kategori_id, judul, isi, lampiran, status))
 
-            if (i + 1) % 100 == 0 or (i + 1) == data:
+            if (i + 1) % 10000 == 0 or (i + 1) == data:
                 cur.executemany("INSERT INTO pengaduan (user_id, kategori_id, judul, isi, lampiran, status) VALUES (%s, %s, %s, %s, %s, %s)", pengaduan_to_insert)
                 connection.commit()
                 print(f"Telah memasukkan {i + 1} baris ke 'pengaduan'...")
@@ -175,7 +175,7 @@ def mysql_connection():
             isi = fake.text()
             komentar_to_insert.append((pengaduan_id, user_id, isi))
 
-            if (i + 1) % 100 == 0 or (i + 1) == data:
+            if (i + 1) % 10000 == 0 or (i + 1) == data:
                 cur.executemany("INSERT INTO komentar (pengaduan_id, user_id, isi) VALUES (%s, %s, %s)", komentar_to_insert)
                 connection.commit()
                 print(f"Telah memasukkan {i + 1} baris ke 'komentar'...")
