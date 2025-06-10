@@ -9,33 +9,11 @@ Skrip Python ini dirancang untuk mengotomatiskan proses penyiapan database MySQL
 
 ## ✨ Fitur
 
-* **Pembuatan Database dan Tabel**: Membuat database `pengaduan` dan semua tabel yang diperlukan (`pengguna`, `kategori`, `pengaduan`, `komentar`) jika belum ada.
+* **Pembuatan Database dan Tabel**: Membuat database `pengaduan` dan semua tabel yang diperlukan (`users`, `kategoris`, `pengaduan`, `comments`) jika belum ada.
 * **Data Palsu Realistis**: Menggunakan pustaka [Faker](https://faker.readthedocs.io/en/master/) untuk menghasilkan data palsu yang kontekstual seperti nama, email, konten, dan status.
 * **Indikator Kemajuan**: Menampilkan log selama proses penyisipan data agar pengguna mengetahui progres.
 * **Penanganan Koneksi Tangguh**: Menangani error koneksi MySQL dan memastikan koneksi ditutup dengan benar.
-
----
-
-🌐 Visualisasi ERD
-
-Berikut adalah visualisasi Entity Relationship Diagram (ERD) untuk database pengaduan yang digunakan oleh skrip ini:
-
-+------------+        +------------+        +-----------------+        +--------------+
-|  pengguna  |        |  kategori  |        |    pengaduan    |        |   komentar   |
-+------------+        +------------+        +-----------------+        +--------------+
-| id (PK)    |<----+  | id (PK)    |<----+  | id (PK)         |<----+  | id (PK)      |
-| nama       |        | nama       |        | user_id (FK)    |        |user_id (FK)  |
-| email      |        +------------+        | kategori_id(FK) |        |pengaduan_id  |
-| password   |                              | isi_pengaduan   |        |isi_komentar  |
-| role       |                              | status          |        |created_at    |
-| created_at |                              | created_at      |        +--------------+
-| updated_at |                              | updated_at      |
-+------------+                              +-----------------+
-
-
-Visualisasi ini membantu dalam memahami hubungan antar tabel dan kunci asing (foreign key) yang digunakan.
-
-
+* 
 ---
 
 ## 🚀 Memulai
@@ -95,7 +73,7 @@ data = 1000000  # default
 # data = 50000  # untuk pengisian menengah
 # data = 1000   # untuk pengujian cepat
 ```
-
+> jangan lupa untuk menyesuaikan pada input data (users, pengaduan, comments)
 > ℹ️ Nilai besar akan memakan waktu cukup lama, disarankan mulai dari nilai kecil.
 
 ### Menyesuaikan Detail Koneksi
@@ -132,12 +110,12 @@ Juga bisa ubah `random_int(min, max)` untuk foreign key agar sesuai dengan data 
 Misalnya, menambahkan kolom `address` ke tabel pengguna:
 
 ```sql
-CREATE TABLE IF NOT EXISTS pengguna (
+CREATE TABLE IF NOT EXISTS users (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    nama VARCHAR(50) NOT NULL,
+    name VARCHAR(50) NOT NULL,
     email VARCHAR(100) NOT NULL,
     password VARCHAR(255) NOT NULL,
-    role ENUM('RT', 'warga') NOT NULL DEFAULT 'warga',
+    role ENUM('rt', 'warga') NOT NULL DEFAULT 'warga',
     address VARCHAR(255), -- kolom baru
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
@@ -163,7 +141,7 @@ Skrip ini bebas digunakan dan dimodifikasi untuk keperluan pembelajaran dan peng
 
 ---
 
-> Dibuat dengan ❤️ untuk membantu proses pengujian basis data dengan cepat dan efisien.
+> Dibuat untuk membantu proses pengujian basis data dengan cepat dan efisien.
 
 
 
